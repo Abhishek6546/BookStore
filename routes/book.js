@@ -75,7 +75,7 @@ router.get("/get-all-books",async(req,res)=>{
 //get recently added books limit 4
 router.get("/get-recent-books",async(req,res)=>{
     try {
-       const books =await Book.find().sort({createdAT: -1}).limit(4);
+       const books =await Book.find().sort({createdAt: -1}).limit(4);
         res.status(200).json({message:"success",data:books});
     } catch (error) {
         res.status(500).json({message:"internal server error",error});
