@@ -6,7 +6,7 @@ const {authenticationToken} =require("./userAuth")
 // sign up
 router.post("/sign-up", async(req,res)=>{
     try {
-        const {username,email,password,address}=req.body;
+        const {username,email,password,address,contact}=req.body;
         //check usernane length is more than 3
         if(username.length<4){
             return res.status(400).json({message:"username length should be greater than 3"});
@@ -23,6 +23,11 @@ router.post("/sign-up", async(req,res)=>{
         if(existingEmail){
             return res.status(400).json({message:"Email already exits"});
         }
+        //check contact 
+        const existingContact =await User.findOne({contact: contact});
+        if(existingContact){
+            return res.status(400).json({message:"contact already exits"});
+        }
 
         //check password length
         if(password.length <= 5){
@@ -37,6 +42,8 @@ router.post("/sign-up", async(req,res)=>{
                 email:email,
                 password:hashPass,
                 address:address,
+                contact:contact,
+
             }
         );
         await newUser.save();
