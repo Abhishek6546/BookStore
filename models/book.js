@@ -26,6 +26,11 @@ const book = new mongoose.Schema(
             type: String,
             required: true,
         },
+        // category: {
+        //     type: String,
+        //     required: true,
+        //     enum:["Fiction","NonFiction","Children’s Books","History","Educational","Classics"],
+        // },
 
     },
     { timestamps: true }

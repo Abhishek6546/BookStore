@@ -21,6 +21,7 @@ router.post("/add-book",authenticationToken,async(req,res)=>{
             price: req.body.price,
             desc :req.body.desc,
             language: req.body.language,
+            
         });
         await book.save();
         res.status(200).json({message:"book added successfully"});
@@ -41,6 +42,7 @@ router.put("/update-book",authenticationToken,async(req,res)=>{
             price: req.body.price,
             desc :req.body.desc,
             language: req.body.language,
+          
         });
 
         res.status(200).json({message:"book updated successfully"});
@@ -93,3 +95,16 @@ router.get("/get-book-id/:id",async(req,res)=>{
     }
 });
 module.exports=router;
+
+
+//get books by category
+
+// router.get("/get-books-by-category/:category", async (req, res) => {
+//     try {
+//         const { category } = req.params;
+//         const books = await Book.find({ category }).sort({ createdAt: -1 });
+//         res.status(200).json({ message: "Success", data: books });
+//     } catch (error) {
+//         res.status(500).json({ message: "Internal server error", error });
+//     }
+// });

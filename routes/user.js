@@ -7,6 +7,7 @@ const {authenticationToken} =require("./userAuth")
 router.post("/sign-up", async(req,res)=>{
     try {
         const {username,email,password,address,contact}=req.body;
+     
         //check usernane length is more than 3
         if(username.length<4){
             return res.status(400).json({message:"username length should be greater than 3"});
@@ -18,6 +19,9 @@ router.post("/sign-up", async(req,res)=>{
             return res.status(400).json({message:"username already exits"});
         }
 
+         //name of the user
+       
+         
         //check email already exists
         const existingEmail =await User.findOne({email: email});
         if(existingEmail){
@@ -38,7 +42,9 @@ router.post("/sign-up", async(req,res)=>{
 
         const newUser = new User(
             {
+
                 username:username,
+              
                 email:email,
                 password:hashPass,
                 address:address,
@@ -47,6 +53,7 @@ router.post("/sign-up", async(req,res)=>{
             }
         );
         await newUser.save();
+      
         return res.status(200).json({message:"Signup Successfully"});
     } catch (error) {
         res.status(500).json({message:"internal server error",error});
