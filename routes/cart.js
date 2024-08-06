@@ -6,7 +6,9 @@ const { authenticationToken } = require("./userAuth");
 router.put("/add-to-cart", authenticationToken, async (req, res) => {
     try {
         const { bookid, id } = req.headers;
+        console.log("Headers received:", req.headers); 
         const userData = await User.findById(id);
+        console.log("User data found:", userData);
         const isbookinCart = userData.cart.includes(bookid);
         if (isbookinCart) {
             return res.status(200).json({ message: "book is already in cart" })
