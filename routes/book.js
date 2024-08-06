@@ -107,7 +107,7 @@ router.delete("/delete-book",authenticationToken,async(req,res)=>{
     }
 });
 
-//add books by categories
+
 // Get books by category
 router.get("/get-books-by-category/:category", async (req, res) => {
     try {
