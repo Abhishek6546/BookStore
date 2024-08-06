@@ -26,17 +26,22 @@ const book = new mongoose.Schema(
             type: String,
             required: true,
         },
+        
+        // category: {
+        //     type: String,
+        //     required: true,
+        //     enum: [
+        //         "Fiction",
+        //         "Non-Fiction",
+        //         "Children’s Books",
+        //         "History",
+        //         "Educational",
+        //         "Classics",
+        //     ],
+        // },
         category: {
             type: String,
             required: true,
-            enum: [
-                "Fiction",
-                "Non-Fiction",
-                "Children’s Books",
-                "History",
-                "Educational",
-                "Classics",
-            ],
         },
 
     },
