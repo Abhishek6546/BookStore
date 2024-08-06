@@ -38,6 +38,7 @@ router.post("/add-book", authenticationToken, async (req, res) => {
         if (user.role !== "admin") {
             return res.status(403).json({ message: "Access denied" });
         }
+        console.log("heee")
         console.log('Received book data:', req.body);
         const book = new Book({
             url: req.body.url,
@@ -47,7 +48,6 @@ router.post("/add-book", authenticationToken, async (req, res) => {
             desc: req.body.desc,
             language: req.body.language,
             category: req.body.category,
-            misc:req.body.misc,
         });
         await book.save();
         res.status(200).json({ message: "Book added successfully"} );
