@@ -38,7 +38,7 @@ router.post("/add-book", authenticationToken, async (req, res) => {
         if (user.role !== "admin") {
             return res.status(403).json({ message: "Access denied" });
         }
-
+        console.log('Received book data:', req.body);
         const book = new Book({
             url: req.body.url,
             title: req.body.title,
@@ -49,7 +49,8 @@ router.post("/add-book", authenticationToken, async (req, res) => {
             category: req.body.category,
         });
         await book.save();
-        res.status(200).json({ message: "Book added successfully" });
+        res.status(200).json({ message: "Book added successfully"} );
+        
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error });
     }
