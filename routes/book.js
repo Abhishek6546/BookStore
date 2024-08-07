@@ -32,24 +32,37 @@ const {authenticationToken} =require("./userAuth")
 
 // Add book -- admin
 router.post("/add-book", authenticationToken, async (req, res) => {
+    const { url, title, author, price, desc, language, category } = req.body;
+    console.log('Category:', category);  
     try {
         const { id } = req.headers;
+        console.log("2")
         const user = await User.findById(id);
         if (user.role !== "admin") {
             return res.status(403).json({ message: "Access denied" });
         }
         console.log("heee")
-        console.log('Received book data:', req.body);
+        //  console.log('Received book data:', req.body);
         const book = new Book({
-            url: req.body.url,
-            title: req.body.title,
-            author: req.body.author,
-            price: req.body.price,
-            desc: req.body.desc,
-            language: req.body.language,
-            category: req.body.category,
+            // url: req.body.url,
+            // title: req.body.title,
+            // author: req.body.author,
+            // price: req.body.price,
+            // desc: req.body.desc,
+            // language: req.body.language,
+            // category: req.body.category,
+
+            url: url,
+            title: title,
+            author: author,
+            price: price,
+            desc: desc,
+            language: language,
+            category: category,
         });
+       
         await book.save();
+        console.log(book)
         res.status(200).json({ message: "Book added successfully"} );
         
     } catch (error) {
@@ -82,6 +95,8 @@ router.post("/add-book", authenticationToken, async (req, res) => {
 router.put("/update-book", authenticationToken, async (req, res) => {
     try {
         const { bookid } = req.headers;
+        console.log("heee")
+        console.log('Received book data:', req.body);
         await Book.findByIdAndUpdate(bookid, {
             url: req.body.url,
             title: req.body.title,
@@ -109,14 +124,28 @@ router.delete("/delete-book",authenticationToken,async(req,res)=>{
 });
 
 
-// Get books by category
-router.get("/get-books-by-category/:category", async (req, res) => {
+ // Get books by category
+// router.get('/get-books-by-category/:category', async (req, res) => {
+//     const { category } = req.params;
+//     console.log('Category:', category); // Debugging line
+
+//     try {
+//         const books = await Book.find({ category });
+//         res.status(200).json({ message: "Success", data: books });
+//     } catch (error) {
+//         console.error('Error fetching books by category:', error);
+//         res.status(500).json({ message: 'Internal server error', error });
+//     }
+// });
+router.get('/get-books-by-category', async (req, res) => {
+   // Debugging line
+    const category =Fiction;
     try {
-        const { category } = req.params;
-        const books = await Book.find({ category }).sort({ createdAt: -1 });
+        const books = await Book.find({ category });
         res.status(200).json({ message: "Success", data: books });
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error });
+        console.error('Error fetching books by category:', error);
+        res.status(500).json({ message: 'Internal server error', error });
     }
 });
 
