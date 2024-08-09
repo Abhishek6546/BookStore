@@ -33,7 +33,7 @@ const {authenticationToken} =require("./userAuth")
 // Add book -- admin
 router.post("/add-book", authenticationToken, async (req, res) => {
     const { url, title, author, price, desc, language, category } = req.body;
-    console.log('Category:', category);  
+   
     try {
         const { id } = req.headers;
         console.log("2")
@@ -124,30 +124,21 @@ router.delete("/delete-book",authenticationToken,async(req,res)=>{
 });
 
 
- // Get books by category
-// router.get('/get-books-by-category/:category', async (req, res) => {
-//     const { category } = req.params;
-//     console.log('Category:', category); // Debugging line
 
-//     try {
-//         const books = await Book.find({ category });
-//         res.status(200).json({ message: "Success", data: books });
-//     } catch (error) {
-//         console.error('Error fetching books by category:', error);
-//         res.status(500).json({ message: 'Internal server error', error });
-//     }
-// });
-router.get('/get-books-by-category', async (req, res) => {
-   // Debugging line
-    const category =Fiction;
+router.get('/get-books-by-category/:category', async (req, res) => {
+    const { category } = req.params;
+    console.log('Querying books with category:', category);  // Log the category being queried
+
     try {
         const books = await Book.find({ category });
+        console.log('Books found:', books);  // Log the books found
         res.status(200).json({ message: "Success", data: books });
     } catch (error) {
         console.error('Error fetching books by category:', error);
         res.status(500).json({ message: 'Internal server error', error });
     }
 });
+
 
 
 // user Apis
@@ -184,14 +175,3 @@ router.get("/get-book-id/:id",async(req,res)=>{
 module.exports=router;
 
 
-// get books by category
-
-// router.get("/get-books-by-category/:category", async (req, res) => {
-//     try {
-//         const { category } = req.params;
-//         const books = await Book.find({ category }).sort({ createdAt: -1 });
-//         res.status(200).json({ message: "Success", data: books });
-//     } catch (error) {
-//         res.status(500).json({ message: "Internal server error", error });
-//     }
-// });
